@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Seller & Nissan Silhouette Atlas (1960–2025)</title>
+<style>
+:root{--bg:#101317;--panel:#1b2128;--panel2:#242c35;--ink:#f3f5f7;--muted:#aeb8c2;--line:#3b4651;--lime:#d4f477;--nissan:#ff5c5c;--blue:#92c9ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:26px clamp(18px,4vw,52px) 20px;background:linear-gradient(120deg,#222b34,#101317);border-bottom:1px solid var(--line)}
+.kicker{color:var(--lime);font-size:11px;font-weight:800;letter-spacing:.16em}
+h1{font-size:clamp(25px,4vw,40px);line-height:1.08;letter-spacing:-.04em;margin:8px 0 10px}
+header p{max-width:900px;color:var(--muted);margin:0;font-size:14px}
+main{max-width:1320px;margin:auto;padding:20px clamp(12px,3vw,32px) 40px}
+.toolbar{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-bottom:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}
+.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;display:block;margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--lime)}
+.row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.year{font-size:31px;font-weight:900;letter-spacing:-.04em}
+select,button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:9px 11px;font:inherit}
+select{width:100%}
+.meta{font-size:12px;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr;gap:14px}
+.carcard{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.carhead{padding:16px 16px 0;display:flex;justify-content:space-between;gap:10px}
+.carhead h2{font-size:19px;line-height:1.15;margin:2px 0 4px}
+.pill{border:1px solid #5d7036;color:var(--lime);border-radius:20px;padding:4px 9px;font-size:10px;height:max-content;white-space:nowrap}
+.pill.nissan{border-color:#8c3333;color:var(--nissan)}
+.drawing{padding:4px 10px 0;background:#13181d}
+.drawing svg{width:100%;height:auto;display:block}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 16px}
+.fact{background:var(--panel2);padding:10px;border-radius:9px}
+.fact span{display:block;color:var(--muted);font-size:11px}
+.fact strong{font-size:13px}
+.section{margin-top:14px}
+.section h2{font-size:17px;margin:0 0 8px}
+.timeline{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.timeline button{font-size:12px;padding:6px 9px;cursor:pointer}
+.timeline button.active{border-color:var(--lime);color:var(--lime)}
+.dare-badge{display:inline-block;padding:3px 8px;border-radius:6px;font-weight:800;font-size:12px;background:#2b2326;color:var(--nissan);border:1px solid #753535}
+.footer{color:var(--muted);font-size:12px;line-height:1.7;margin-top:20px}
+.drawing{text-align:center}
+.drawing canvas{display:block;width:100%;height:auto;max-width:860px;margin:0 auto;cursor:crosshair}
+.tools{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px 0;align-items:center;text-align:left}
+.tools button,.tools .btn{font-size:12px;padding:6px 9px;cursor:pointer;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--ink)}
+.tools button.on{border-color:var(--lime);color:var(--lime)}
+.tools input[type=number]{width:68px;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 6px;font:inherit;font-size:12px}
+.hint{padding:6px 12px;text-align:left}
+#ov *{vector-effect:non-scaling-stroke}
+.mt{width:100%;border-collapse:collapse;font-size:12px}.mt th,.mt td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right}.mt th:first-child,.mt td:first-child{text-align:left;color:var(--muted)}
+@media(max-width:850px){.toolbar,.hero{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">AUTOMOTIVE TREND & NISSAN DARE ATLAS</div>
+  <h1>売れ筋 vs 日産車：シルエット比較</h1>
+  <p>地域と年代を選ぶと、その地域で最も売れた乗用車（A・ライム色）と日産の主力車（B・赤色）が既定で入ります。2台は自由に差し替えられ、写真から抽出したシルエットを実寸で重ねて、日産のプロポーション上の“Dare度”を探るツールです。</p>
+</header>
+<main>
+ <div class="toolbar">
+  <section class="panel">
+    <div class="row"><span class="label">YEAR / 年代を選ぶ</span><span class="year" id="yearLabel">2025</span></div>
+    <input id="year" type="range" min="1960" max="2025" step="5" value="2025">
+    <div class="row meta"><span>1960</span><span>5年刻み</span><span>2025</span></div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+  <section class="panel">
+    <label class="label" for="region">REGION / 地域</label>
+    <select id="region"><option value="GLOBAL">世界（従来の設定）</option><option value="US">US</option><option value="JAPAN">JAPAN</option><option value="EUR">EUR</option><option value="LATAM">LATAM</option><option value="ASEAN">ASEAN</option><option value="GCC">GCC（湾岸・中東）</option></select>
+    <div style="height:10px"></div>
+    <label class="label" for="lens">ANALYSIS VIEW / 表示モード</label>
+    <select id="lens">
+      <option value="overlay">A ✕ B 重ね合わせ比較</option>
+      <option value="world">Aのみ表示</option>
+      <option value="nissan">Bのみ表示</option>
+    </select>
+    <div class="meta" style="margin-top:10px">
+      <b>配色：</b><span style="color:var(--lime)">■ A（上段）</span> ｜ <span style="color:var(--nissan)">■ B（下段）</span> ｜ 濃い塗り＝DLO（同じ車は同色）</div>
+    <div style="margin-top:10px"><button id="exportBtn" style="cursor:pointer">💾 写真込みでHTML書き出し</button> <span class="meta" id="exportMsg"></span></div>
+  </section>
+ </div>
+
+ <section class="hero">
+  <!-- 世界のベストセラーカード -->
+  <article class="carcard">
+    <div>
+      <div class="carhead">
+        <div>
+          <div class="label">A（上段）／世界・地域の売れ筋</div>
+          <h2 id="worldName">Tesla Model Y</h2>
+          <div id="worldSub" class="meta">クロスオーバーSUV</div>
+        </div>
+        <span class="pill" id="worldVolume">年間 ~120万台超</span>
+      </div>
+      <div class="drawing" id="slot-w"></div>
+    </div>
+    <div class="facts">
+      <div class="fact"><span>ボディタイプ</span><strong id="worldType">クロスオーバーSUV</strong></div>
+      <div class="fact"><span>選定の確度</span><strong id="worldProp">厚い床・高いヒップポイント</strong></div>
+    </div>
+  </article>
+
+  <!-- 日産の主力車カード -->
+  <article class="carcard">
+    <div>
+      <div class="carhead">
+        <div>
+          <div class="label">B（下段）／日産の主力</div>
+          <h2 id="nisName">Nissan Ariya / Kicks / Rogue系</h2>
+          <div id="nisSub" class="meta">クロスオーバーSUV / EV</div>
+        </div>
+        <span class="pill nissan" id="nisVolume">国内・グローバル主力</span>
+      </div>
+      <div class="drawing" id="slot-n"></div>
+    </div>
+    <div class="facts">
+      <div class="fact"><span>ボディタイプ</span><strong id="nisCarModel">Ariya / e-POWERモデル</strong></div>
+      <div class="fact"><span>選定の確度</span><strong id="dareBadgeHtml"><span class="dare-badge">標準的・同調</span></strong></div>
+    </div>
+  </article>
+ </section>
+
+ <section class="panel section">
+  <h2>H.P.合わせ 実寸重ね比較</h2>
+  <div class="meta" id="ovLegend"></div>
+  <div class="timeline" id="ovTabs" style="margin:8px 0;align-items:center"><button data-ov="hp" class="active">H.P.合わせ</button><button data-ov="ground">タイヤ下端合わせ</button><span class="meta" style="margin-left:10px">前後位置：</span><button data-ox="hp" class="active">H.P.で揃える</button><button data-ox="fw">前輪センターで揃える</button><button id="ovReset" style="margin-left:auto">この年代の抽出を全消去</button></div>
+  <svg id="ov" viewBox="-3000 -1300 5700 2200" style="width:100%;height:auto;background:#13181d;border-radius:10px;margin-top:8px"></svg>
+  <div id="metrics" style="overflow-x:auto;margin-top:10px"></div>
+  <div class="meta" style="margin-top:6px">縮尺＝ホイールベース実寸(mm) ／ グリッド＝500mm（H.P.合わせ：原点＝H.P.、タイヤ下端合わせ：数値は地面からの高さmm）</div>
+ </section>
+
+ <section class="panel section" style="margin-top:14px;">
+  <h2><span id="eraTitle">2025年：クロスオーバーSUVの定着と日産のスタンス</span></h2>
+  <p id="eraDesc" class="meta" style="font-size:14px; line-height:1.7;">
+    世界を席巻するSUVのシルエットに対し、日産もアリアやキックス、ノート等でZEV・e-POWERのパッケージを展開。トレンドの王道にしっかり乗る堅実かつ先進的なアプローチが見て取れます。
+  </p>
+ </section>
+
+ <div class="footer">
+   ※本ツールのシルエットおよび販売台数は、自動車の世代変遷やパッケージ（セダン、ワンボックス、SUV等）のトレンドを感覚的に把握するための模式図・概算値です。商用車（ハイエースやサニーキャブ等のトラック・バン類）は除外しています。地域別の既定車種（販売ランキング）は記憶ベースの目安で、統計が乏しい年代・地域は暫定です。ホイールベースも含め、確認のうえ修正してください。<br>写真はブラウザ内でのみ処理され、サーバーには送信されません。抽出した輪郭データ（実寸mm）だけがこの端末のブラウザに保存されます。
+ </div>
+</main>
+
+<script>
+const data = {
+1960:{
+  wName:"Volkswagen Beetle", wType:"リアエンジン・小型セダン", wVol:"世界首位級（年間数十万台）", wShape:"beetle", wProp:"丸いルーフ・短いノーズ",
+  nName:"Nissan Bluebird (310型)", nType:"小型セダン", nVol:"国内年間 約3〜4万台", nShape:"sedanOld", nModel:"ブルーバード310",
+  dare:"低め (王道追従)", dareScore:"★☆☆☆",
+  title:"1960年代：セダン前夜と「小さく丸い」パッケージの時代",
+  desc:"60年代初頭は、世界的にVWビートルなどのリヤエンジン車やコンパクトな独立トランクセダンが台頭した時期。日産はダットサン・ブルーバード（310型）を投入し、日本のマイカー時代の扉を開きました。世界の王道スタイルに真っ向から挑んだ堅実なスタートです。"
+},
+1965:{
+  wName:"Volkswagen Beetle", wType:"リアエンジン・小型セダン", wVol:"世界首位（年間100万台突破）", wShape:"beetle", wProp:"丸いルーフ・広いガラス",
+  nName:"Nissan Bluebird (410型) / Sunny", nType:"小型セダン", nVol:"国内・海外で大ヒット", nShape:"sedanOld", nModel:"ブルーバード(ピニンファリーナ) / サニー",
+  dare:"中め (スタイリッシュ路線)", dareScore:"★★☆☆",
+  title:"1965年代：イタリアンデザインの導入とセダン黄金期の幕開け",
+  desc:"世界ではビートルが全盛期を謳歌。日産はピニンファリーナデザインのブルーバード410型や、のちのサニー（B10型）をヒットさせます。セダンおよびその派生ワゴンが自動車の絶対的な標準だった時代です。"
+},
+1970:{
+  wName:"Volkswagen Beetle", wType:"リアエンジン・小型セダン", wVol:"世界首位（累計記録更新中）", wShape:"beetle", wProp:"丸形キャビン・直立気味の着座",
+  nName:"Nissan Sunny (B110) / Bluebird (510)", nType:"小型セダン", nVol:"国内ベストセラー争い", nShape:"sedan", nModel:"サニー(B110) / ブルーバード(510)",
+  dare:"低め (王道・高性能)", dareScore:"★☆☆☆",
+  title:"1970年代初頭：サニーとカローラの激しい販売合戦",
+  desc:"「隣のクルマが新しく見えます」のサニー（B110）や名車ブルーバード（510）が活躍。世界的なトレンドである小型セダンの箱型3ボックス構成に完璧に同調し、高い走行性能と居住性でベストセラーを猛追しました。"
+},
+1975:{
+  wName:"Toyota Corolla (E30)", wType:"コンパクト・セダン", wVol:"世界首位浮上期", wShape:"sedan", wProp:"独立したトランク・ノーズ",
+  nName:"Nissan Sunny (B210) / Violet", nType:"コンパクトセダン・クーペ", nVol:"国内上位", nShape:"sedan", nModel:"サニー(B210) / バイオレット",
+  dare:"中め (クジラ・コダワリ)", dareScore:"★★☆☆",
+  title:"1975年中盤：オイルショックとスタイリングの模索",
+  desc:"世界的にカローラが首位級へ躍り出る中、日産はサニーなどで独自の流麗なウェーブスタイルを取り入れました。王道のセダン形状を維持しつつも、デザインのディテールで個性を主張した時期です。"
+},
+1980:{
+  wName:"Toyota Corolla (E70)", wType:"コンパクト・セダン", wVol:"世界首位級", wShape:"sedan", wProp:"直線基調・3ボックス",
+  nName:"Nissan Sunny (B310 / B11 FF化)", nType:"コンパクトセダン", nVol:"国内ベストセラー", nShape:"sedan", nModel:"サニー（B11でFF化）",
+  dare:"低め (堅実なFF転換)", dareScore:"★☆☆☆",
+  title:"1980年代初頭：FF（前輪駆動）化による居住性革命",
+  desc:"世界のコンパクトカーが続々とFFレイアウトへ移行。日産もサニー（B11型）などで横置きFFを採用し、キャビンを拡大。世界のトレンドである「効率的な2BOX・小型セダン」の王道を真っ直ぐ往く選択でした。"
+},
+1985:{
+  wName:"Toyota Corolla (E80 / AE86等)", wType:"コンパクト・セダン / ハッチ", wVol:"世界首位級", wShape:"hatch", wProp:"直線的ハッチ・ノーズ",
+  nName:"Nissan Sunny (B12) / Pulsar", nType:"ハッチバック・セダン", nVol:"国内大ヒット", nShape:"hatch", nModel:"サニー(トラッド) / パルサー",
+  dare:"中め (角張ったスタイリッシュさ)", dareScore:"★★☆☆",
+  title:"1985年中盤：シャープな角形デザインとハッチバックの拡大",
+  desc:"世界的にハッチバックや直線基調のデザインが人気に。日産は「トラッドサニー」やパルサーを投入し、クリーンでスタイリッシュな面構成で勝負。トレンドの枠内ですが非常に洗練されたプロポーションでした。"
+},
+1990:{
+  wName:"Toyota Corolla (E90)", wType:"コンパクト・セダン", wVol:"世界首位級", wShape:"sedan", wProp:"丸みを帯びた3ボックス",
+  nName:"Nissan Pulsar (N14) / Sunny (B13)", nType:"ハッチバック / セダン", nVol:"国内上位", nShape:"hatch", nModel:"パルサー(GTI-R) / サニー",
+  dare:"高め (走りのアグレッシブさ)", dareScore:"★★★☆",
+  title:"1990年代初頭：バブル期の贅沢なパッケージと「901運動」",
+  desc:"日産が「901運動」で足回りと走りに徹底的にこだわり、パルサーGTI-Rやプリメーラを世に送り出した黄金期。世界の主流セダン・ハッチのトレンドを押さえつつ、走りに関するエンジニアリングの「Dare度」は極めて高いピークにありました。"
+},
+1995:{
+  wName:"Toyota Corolla (E100)", wType:"コンパクト・セダン", wVol:"世界首位級", wShape:"sedan", wProp:"厚みのある安全ボディ",
+  nName:"Nissan March (K11) / Sunny (B14)", nType:"コンパクトハッチ / セダン", nVol:"国内大ヒット（マーチが年間上位）", nShape:"hatch", nModel:"マーチ(K11) / サニー",
+  dare:"高め (マーチの欧州調丸型)", dareScore:"★★★☆",
+  title:"1995年中盤：マーチのヒットとセダンからの多様化",
+  desc:"世界的にセダンからコンパクトハッチへの回帰が見られる中、日産はK11マーチで欧州調の愛嬌あるラウンドフォルムをヒットさせました。実用セダンの枠をあえて大きく外れ、キュートな個性を貫いた高いDare度を誇ります。"
+},
+2000:{
+  wName:"Volkswagen Golf IV", wType:"Cセグメント・ハッチバック", wVol:"世界首位の年", wShape:"hatch", wProp:"高めのキャビン・高品質な面",
+  nName:"Nissan Cube (Z11) / March (K12)", nType:"トールワゴン / コンパクト", nVol:"国内で爆発的ヒット", nShape:"box", nModel:"キューブ(Z11) / マーチ(K12)",
+  dare:"最高 (BOX・アシンメトリー)", dareScore:"★★★★",
+  title:"2000年代初頭：スクエアな「箱型・トールワゴン」への大変革",
+  desc:"世界がゴルフ等のプレミアム・ハッチバックに向かう中、日産は初代・2代目キューブ（Z11）やK12マーチで**「あえて箱型」「アシンメトリー（左右非対称）」**という圧倒的なDare（挑戦）を敢行。世界のトレンド車とは全く異なる独自のライフスタイルシルエットを定着させました。"
+},
+2005:{
+  wName:"Toyota Corolla", wType:"コンパクト・セダン", wVol:"世界首位", wShape:"sedan", wProp:"高めのキャビン・安全ボディ",
+  nName:"Nissan Note (E11) / Tiida", nType:"コンパクト・ハッチバック", nVol:"国内上位", nShape:"hatch", nModel:"ノート(E11) / ティーダ",
+  dare:"中め (使い勝手の最適化)", dareScore:"★★☆☆",
+  title:"2005年中盤：使い勝手を極めたコンパクト＆ミニバンの時代",
+  desc:"世界はセダンおよびクロスオーバー前夜。日産はティーダや初代ノート（E11）で、コンパクトな全長に広い室内空間を詰め込むパッケージングを展開。王道のハッチバックトレンドにしっかりフィットした堅実な布陣です。"
+},
+2010:{
+  wName:"Toyota Corolla", wType:"コンパクト・セダン / ハッチ", wVol:"世界首位", wShape:"sedan", wProp:"厚いベルトライン",
+  nName:"Nissan Serena (C26) / Note (E12)", nType:"ミニバン / コンパクト", nVol:"国内ミニバン首位・ノート大ヒット", nShape:"box", nModel:"セレナ(C26) / ノート(E12)",
+  dare:"中め (ミニバン・EVの先駆け)", dareScore:"★★☆☆",
+  title:"2010年代初頭：ミニバン隆盛と世界初の量産EV「リーフ」",
+  desc:"世界的なセダン・SUVへの移行と並行し、日本ではミニバン（セレナ）が家族の定番に。さらに日産は世界初の量産EV「リーフ」を投入。シルエットの王道（ハッチ/ミニバン）を押さえつつ、中身のパワートレインで世界を驚かせる高い挑戦性を見せました。"
+},
+2015:{
+  wName:"Toyota Corolla", wType:"コンパクト・セダン", wVol:"世界首位", wShape:"sedan", wProp:"シャープなノーズ・高ベルト",
+  nName:"Nissan Note (e-POWER) / X-Trail", nType:"コンパクト / SUV", nVol:"国内年間首位獲得（ノート e-POWER）", nShape:"hatch", nModel:"ノート e-POWER / エクストレイル",
+  dare:"中め (e-POWERで大ヒット)", dareScore:"★★☆☆",
+  title:"2015年中盤：e-POWERの爆発的普及とSUVの定着",
+  desc:"世界中でSUVの波が本格化する中、日産はノートに「e-POWER」を搭載して国内販売首位を獲得。外形シルエットは王道のコンパクトハッチながら、電動駆動の新しいドライビング体験で市場のトレンドをリードしました。"
+},
+2020:{
+  wName:"Toyota RAV4 / Corolla", wType:"SUV / セダン", wVol:"世界首位級", wShape:"suv", wProp:"厚い床・高いルーフ",
+  nName:"Nissan Kicks / Rogue / Note (E13)", nType:"コンパクトSUV / ハッチ", nVol:"グローバルSUV主力", nShape:"suv", nModel:"キックス / アリア",
+  dare:"中め (クロスオーバー標準化)", dareScore:"★★☆☆",
+  title:"2020年代初頭：電動クロスオーバーへの本格移行",
+  desc:"世界的なベストセラーが完全にクロスオーバーSUV（RAV4やModel Y等）へシフト。日産もキックスや新型ノート、そして電動SUVのアリアを展開し、世界の「厚い床・高い着座位置」というマクロトレンドにしっかり同調しています。"
+},
+2025:{
+  wName:"Tesla Model Y", wType:"クロスオーバーSUV", wVol:"世界年間首位（約120万台超）", wShape:"suv", wProp:"低いノーズ・流線型ルーフ・厚い床",
+  nName:"Nissan Ariya / Global EV Lineup", nType:"クロスオーバーSUV / EV", nVol:"グローバル戦略車", nShape:"suv", nModel:"アリア / 次世代EVクロスオーバー",
+  dare:"中め (王道EV SUVへの適応)", dareScore:"★★☆☆",
+  title:"2025年：SUVが世界基準となった現在と日産の立ち位置",
+  desc:"現在の世界の絶対王者はテスラ・モデルYに代表されるバッテリーEVクロスオーバーSUV。ルーフの弧や低いノーズ、厚い床パッケージが世界標準です。日産はアリアなどでこのトレンドの王道に参入しており、かつての「キューブ」のような尖った外し方から、グローバルスタンダードなSUVの文脈を巧みに体現するスタイルへと変化しています。"
+}
+};
+
+const CARS={"bb310":["Datsun Bluebird 310",2280,"セダン","https://www.nissan-global.com/EN/HERITAGE/datsun_bluebird_1200_standard.html"],"bb410":["Datsun Bluebird 410",2380,"セダン","https://www.nissan-global.com/EN/HERITAGE/datsun_bluebird_1200_dx_White.html"],"bb510":["Datsun Bluebird 510",2420,"セダン","https://www.nissan-global.com/EN/HERITAGE/datsun_bluebird_1600sss.html"],"b110":["Datsun Sunny B110",2300,"セダン","https://www.nissan-global.com/EN/HERITAGE/datsun_sunny_1200_4_deluxe.html"],"b210":["Datsun Sunny B210",2340,"セダン","https://www.nissan-global.com/EN/HERITAGE/datsun_sunny_excellent_1400gl.html"],"b310":["Nissan Sunny B310",2340,"セダン","https://fastcarcheck.uk/specs/make/nissan/sunny/204888"],"b12":["Nissan Sunny / Sentra B12",2430,"セダン","https://cars-data.com/en/nissan/sunny/dimensions"],"b13":["Nissan Sunny / Sentra B13",2430,"セダン"],"b14":["Nissan Sunny / Sentra B14",2535,"セダン"],"n16":["Nissan Sunny / Almera N16",2600,"セダン"],"almera17":["Nissan Almera N17",2600,"セダン"],"almera18":["Nissan Almera N18",2620,"セダン"],"pulsarN14":["Nissan Pulsar N14",2430,"ハッチバック","https://www.carsales.com.au/research/nissan/pulsar/1994/lx/"],"cherryF10":["Datsun Cherry F10",2335,"ハッチバック"],"cherryN10":["Nissan Cherry N10",2335,"ハッチバック"],"k10":["Nissan March / Micra K10",2300,"ハッチバック"],"k11":["Nissan March / Micra K11",2360,"ハッチバック"],"k12":["Nissan March / Micra K12",2430,"ハッチバック"],"cube":["Nissan Cube Z11",2430,"ハイト"],"note11":["Nissan Note E11",2600,"ハッチバック"],"note12":["Nissan Note E12",2600,"ハッチバック"],"note13":["Nissan Note E13",2580,"ハッチバック"],"serenaC26":["Nissan Serena C26",2860,"MPV"],"serenaC28":["Nissan Serena C28",2870,"MPV"],"qashqai10":["Nissan Qashqai J10",2630,"SUV"],"qashqai11":["Nissan Qashqai J11",2646,"SUV"],"qashqai12":["Nissan Qashqai J12",2666,"SUV"],"kicks15":["Nissan Kicks P15",2620,"SUV"],"ariya":["Nissan Ariya",2775,"SUV","https://motor-fan.jp/?p=975472"],"rogue32":["Nissan Rogue T32",2706,"SUV"],"rogue33":["Nissan Rogue T33",2706,"SUV"],"altima30":["Nissan Altima L30",2620,"セダン"],"altima31":["Nissan Altima L31",2776,"セダン"],"altima32":["Nissan Altima L32",2775,"セダン"],"altima33":["Nissan Altima L33",2775,"セダン"],"tsuru":["Nissan Tsuru (Mexico)",2430,"セダン"],"versa17":["Nissan Versa N17",2600,"セダン"],"patrolY62":["Nissan Patrol Y62",3075,"SUV"],"patrolY63":["Nissan Patrol Y63",3075,"SUV"],"leaf":["Nissan Leaf ZE0",2700,"ハッチバック"],"juke":["Nissan Juke F15",2530,"SUV"],"xtrail32":["Nissan X-Trail T32",2705,"SUV"],"frontier":["Nissan Frontier / Navara D23",3150,"ピックアップ"],"beetle":["VW Beetle Type 1",2400,"セダン","https://www.volkswagen-newsroom.com/en/vehicle-data-beetle-kaefer-16001600i-profile-19604"],"golf1":["VW Golf I",2400,"ハッチバック"],"golf2":["VW Golf II",2475,"ハッチバック"],"golf3":["VW Golf III",2475,"ハッチバック"],"golf4":["VW Golf IV",2511,"ハッチバック"],"golf5":["VW Golf V",2578,"ハッチバック"],"golf6":["VW Golf VI",2578,"ハッチバック"],"golf7":["VW Golf VII",2637,"ハッチバック"],"golf8":["VW Golf VIII",2619,"ハッチバック"],"polobr":["VW Polo (Brazil, MQB)",2564,"ハッチバック"],"gol1":["VW Gol I",2358,"ハッチバック"],"gol3":["VW Gol G3",2465,"ハッチバック"],"gol4":["VW Gol G4",2465,"ハッチバック"],"gol5":["VW Gol G5",2468,"ハッチバック"],"onix":["Chevrolet Onix",2528,"ハッチバック"],"uno":["Fiat Uno",2362,"ハッチバック"],"clio5":["Renault Clio V",2583,"ハッチバック"],"subaru360":["Subaru 360",1800,"軽"],"corolla10":["Toyota Corolla E10",2285,"セダン"],"corona40":["Toyota Corona RT40",2420,"セダン"],"corolla30":["Toyota Corolla E30",2335,"セダン"],"corolla70":["Toyota Corolla E70",2400,"セダン"],"corolla80":["Toyota Corolla E80",2430,"セダン"],"corolla90":["Toyota Corolla E90",2430,"セダン"],"corolla100":["Toyota Corolla E100",2465,"セダン"],"corolla110":["Toyota Corolla E110",2465,"セダン"],"corolla120":["Toyota Corolla E120",2600,"セダン"],"corolla150":["Toyota Corolla E150",2600,"セダン"],"corolla170":["Toyota Corolla E170",2700,"セダン"],"camry95":["Toyota Camry XV10",2620,"セダン"],"camry00":["Toyota Camry XV20",2670,"セダン"],"camry05":["Toyota Camry XV30",2720,"セダン"],"camry10":["Toyota Camry XV40",2775,"セダン"],"camry15":["Toyota Camry XV50",2775,"セダン"],"camry20":["Toyota Camry XV70",2825,"セダン"],"camry25":["Toyota Camry XV80",2825,"セダン"],"prius30":["Toyota Prius ZVW30",2700,"ハッチバック"],"aqua":["Toyota Aqua",2550,"ハッチバック"],"yaris20":["Toyota Yaris XP210",2550,"ハッチバック"],"vios":["Toyota Vios",2550,"セダン"],"avanza":["Toyota Avanza",2750,"MPV"],"rav4":["Toyota RAV4 XA50",2690,"SUV"],"hilux":["Toyota Hilux Double Cab",3085,"ピックアップ"],"accord90":["Honda Accord CB",2720,"セダン"],"nbox":["Honda N-BOX",2520,"軽"],"impala60":["Chevrolet Impala (1960s)",3023,"セダン"],"impala75":["Chevrolet Impala/Caprice (1975)",3086,"セダン"],"citation":["Chevrolet Citation",2664,"ハッチバック"],"cavalier":["Chevrolet Cavalier (1985)",2570,"セダン"],"taurus95":["Ford Taurus (1995)",2692,"セダン"],"f150":["Ford F-150 SuperCrew",3683,"ピックアップ"],"modely":["Tesla Model Y",2890,"SUV"]};
+const BEST={"GLOBAL":[["beetle","bb310",1],["beetle","bb410",1],["beetle","b110",1],["corolla30","b210",1],["corolla70","b310",1],["corolla80","b12",1],["corolla90","pulsarN14",1],["corolla100","k11",1],["golf4","cube",1],["corolla120","note11",1],["corolla150","serenaC26",1],["corolla170","note12",1],["rav4","kicks15",1],["modely","ariya",1]],"US":[["impala60","bb310",2],["impala60","bb410",2],["impala60","bb510",1],["impala75","b210",1],["citation","b310",1],["cavalier","b12",1],["accord90","b13",1],["taurus95","b14",1],["camry00","altima30",1],["camry05","altima31",1],["camry10","altima32",1],["camry15","altima33",1],["rav4","rogue32",1],["rav4","rogue33",1]],"JAPAN":[["subaru360","bb310",2],["corona40","bb410",1],["corolla10","b110",1],["corolla30","b210",1],["corolla70","b310",1],["corolla80","b12",1],["corolla90","b13",1],["corolla100","k11",1],["corolla110","k11",1],["corolla120","note11",1],["prius30","serenaC26",1],["aqua","note12",1],["yaris20","note13",1],["nbox","serenaC28",1]],"EUR":[["beetle","bb310",2],["beetle","bb410",2],["beetle","b110",2],["golf1","cherryF10",2],["golf1","cherryN10",2],["uno","k10",1],["golf2","k10",1],["golf3","k11",1],["golf4","k11",1],["golf5","k12",1],["golf6","qashqai10",1],["golf7","qashqai11",1],["clio5","qashqai11",1],["clio5","qashqai12",1]],"LATAM":[["beetle","bb310",2],["beetle","bb410",2],["beetle","b110",2],["beetle","b210",2],["beetle","b310",2],["gol1","tsuru",2],["gol1","tsuru",2],["gol1","tsuru",1],["gol3","tsuru",1],["gol4","tsuru",1],["gol5","tsuru",1],["gol5","versa17",1],["onix","kicks15",1],["polobr","kicks15",1]],"ASEAN":[["corona40","bb310",2],["corona40","bb410",2],["corolla10","b110",2],["corolla30","b210",2],["corolla70","b310",2],["corolla80","b12",2],["corolla90","b13",2],["corolla100","b14",2],["corolla110","n16",1],["vios","n16",1],["vios","almera17",1],["vios","almera17",1],["vios","almera18",1],["avanza","almera18",1]],"GCC":[["impala60","bb310",2],["corona40","bb410",2],["corolla10","b110",2],["corolla30","b210",2],["corolla70","b310",2],["corolla80","b12",2],["corolla90","b13",2],["camry95","b14",2],["camry00","n16",2],["camry05","n16",2],["camry10","patrolY62",2],["camry15","patrolY62",2],["camry20","patrolY62",2],["camry25","patrolY63",2]]};
+const REGIONS=[['GLOBAL','世界（従来の設定）'],['US','US'],['JAPAN','JAPAN'],['EUR','EUR'],['LATAM','LATAM'],['ASEAN','ASEAN'],['GCC','GCC（湾岸・中東）']];
+const CUSTOM={};
+try{Object.assign(CUSTOM,JSON.parse(localStorage.getItem('atlas-cust')||'{}'));Object.assign(CARS,CUSTOM)}catch(e){}
+const SEL={w:'',n:''};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const regionVal=()=>{const r=document.getElementById('region');return r?r.value:'GLOBAL'};
+const bestRow=()=>(BEST[regionVal()]||BEST.GLOBAL)[(yr()-1960)/5]||['','',1];
+const carId=k=>{const o=SEL[k];return(o&&CARS[o])?o:bestRow()[k==='w'?0:1]};
+function mig(o){Object.keys(o).forEach(key=>{const m=/^(\d{4})-([wn])$/.exec(key);if(m){const row=BEST.GLOBAL[(+m[1]-1960)/5],id=row&&row[m[2]==='w'?0:1];if(id&&!(id in o))o[id]=o[key];delete o[key]}})}
+const COL={w:'#d4f477',n:'#ff5c5c'};
+const S={},IMG={},M={},E={},SRC={},OV={mode:'hp',x:'hp'};
+try{Object.assign(M,JSON.parse(localStorage.getItem('atlas-v1')||'{}'))}catch(e){}
+mig(M);
+const saveM=()=>{try{localStorage.setItem('atlas-v1',JSON.stringify(M))}catch(e){}};
+const yr=()=>+document.getElementById('year').value;
+const kk=k=>carId(k);
+const st=k=>S[kk(k)]||(S[kk(k)]={wb:(CARS[kk(k)]||[0,2600])[1],dlo:[],sil:null,cur:[],mode:null});
+const HINT={rear:'後輪の中心をクリック',front:'前輪の中心をクリック',hip:'ドライバーのヒップポイント(H.P.)をクリック',sil:'車体の外形をクリックで囲む（ダブルクリックか「確定」で閉じる）',dlo:'ガラス面(DLO)を囲む。窓ごとに「確定」を繰り返す',tire:'タイヤの上端と下端（接地点）の2点をクリック'};
+const IDLE='写真を選び、①〜③で校正 → ④⑤で抽出（④は「自動シルエット」も可）';
+
+function buildSlot(k){
+  const box=document.getElementById('slot-'+k);
+  box.innerHTML=`<div class="tools"><span class="meta">車種</span><select class="pick" style="width:auto;max-width:min(380px,100%)"></select><details style="font-size:12px;color:var(--muted)"><summary style="cursor:pointer">＋リスト外の車を追加</summary><input class="cn" placeholder="車名" style="width:140px;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 6px;font:inherit;font-size:12px"> <input class="cw" type="number" placeholder="WB mm" style="width:84px;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:4px 6px;font:inherit;font-size:12px"> <button class="ca" style="cursor:pointer;font-size:12px;padding:4px 8px">追加</button></details></div><div class="tools"><label class="btn">📷 写真を選ぶ<input type="file" accept="image/*" hidden></label>
+<label class="meta">WB<input type="number" class="wb" value="2600" min="1500" max="4500" step="5">mm</label>
+<button data-m="rear">① 後輪</button><button data-m="front">② 前輪</button><button data-m="hip">③ H.P.</button>
+<button data-m="sil">④ シルエット</button><button data-m="dlo">⑤ DLO</button><button data-m="tire">⑥ タイヤ外径</button>
+<button data-a="ok">確定</button><button data-a="undo">戻す</button><button data-a="clr-sil">シルエット消去</button><button data-a="clr-dlo">DLO消去</button><button data-a="clr-tire">タイヤ消去</button><button data-a="clr-cal">校正消去</button><button data-a="reset">この車を全消去</button>
+<span class="meta">背景許容差</span><input type="number" class="tol" value="60" min="5" max="300"><button data-a="auto">自動シルエット</button></div>
+<div class="meta hint"></div><div class="meta wbnote" style="padding:0 12px;text-align:left"></div><div class="meta info" style="padding:0 12px;text-align:left"></div><canvas></canvas>`;
+  const e=E[k]={box,cv:box.querySelector('canvas'),hint:box.querySelector('.hint'),pick:box.querySelector('.pick'),note:box.querySelector('.wbnote'),info:box.querySelector('.info'),wb:box.querySelector('.wb'),tol:box.querySelector('.tol')};
+  box.querySelector('input[type=file]').onchange=ev=>{
+    const f=ev.target.files[0];if(!f)return;const key=kk(k);const fr=new FileReader();
+    fr.onload=()=>{SRC[key]=fr.result;const im=new Image();im.onload=()=>{IMG[key]=im;if(kk(k)===key)resetTraces(k)};im.src=fr.result};
+    fr.readAsDataURL(f);ev.target.value='';
+  };
+  e.wb.onchange=()=>{st(k).wb=+e.wb.value;noteWB(k);commit(k)};
+  box.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const s=st(k);s.mode=b.dataset.m;s.cur=[];box.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x===b));e.hint.textContent=HINT[s.mode];redraw(k)});
+  box.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const s=st(k),a=b.dataset.a;
+    if(a==='ok')finish(k);
+    else if(a==='undo'){if(s.cur.length)s.cur.pop();else if(s.mode==='dlo')s.dlo.pop();else if(s.mode==='sil')s.sil=null;else if(s.mode)s[s.mode]=null;redraw(k);commit(k)}
+    else if(a.startsWith('clr-')){s.cur=[];const t=a.slice(4);if(t==='sil')s.sil=null;else if(t==='dlo')s.dlo=[];else if(t==='tire')s.tire=null;else if(t==='cal'){s.rear=s.front=s.hip=null}redraw(k);commit(k)}
+    else if(a==='reset')resetTraces(k);
+    else if(a==='auto')auto(k);
+  });
+  e.cv.onclick=ev=>{
+    const s=st(k);if(!IMG[kk(k)]||!s.mode)return;
+    const r=e.cv.getBoundingClientRect();
+    const p=[(ev.clientX-r.left)*e.cv.width/r.width,(ev.clientY-r.top)*e.cv.height/r.height];
+    if(s.mode==='rear'||s.mode==='front'||s.mode==='hip')s[s.mode]=p;else s.cur.push(p);
+    if(s.mode==='tire'&&s.cur.length>=2){s.tire=s.cur.slice(0,2);s.cur=[]}
+    redraw(k);commit(k);
+  };
+  e.cv.ondblclick=()=>{const s=st(k);if(s.cur.length)s.cur.pop();finish(k)};
+}
+
+function resetTraces(k){
+  const s=st(k);Object.assign(s,{dlo:[],sil:null,tire:null,rear:null,front:null,hip:null,cur:[],mode:null});
+  E[k].box.querySelectorAll('[data-m]').forEach(b=>b.classList.remove('on'));
+  E[k].hint.textContent=IDLE;redraw(k);commit(k);
+}
+
+function finish(k){
+  const s=st(k);
+  if(s.cur.length>=3){if(s.mode==='sil')s.sil=s.cur;else if(s.mode==='dlo')s.dlo.push(s.cur)}
+  s.cur=[];redraw(k);commit(k);
+}
+
+function auto(k){
+  const img=IMG[kk(k)];if(!img)return;const s=st(k);
+  const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
+  const x=c.getContext('2d');x.drawImage(img,0,0);
+  const W=c.width,H=c.height,D=x.getImageData(0,0,W,H).data;
+  const px=(i,j)=>{const o=(j*W+i)*4;return[D[o],D[o+1],D[o+2]]};
+  const a=px(3,3),b=px(W-4,3),bg=[0,1,2].map(i=>(a[i]+b[i])/2),tol=+E[k].tol.value;
+  const df=(i,j)=>{const p=px(i,j);return Math.abs(p[0]-bg[0])+Math.abs(p[1]-bg[1])+Math.abs(p[2]-bg[2])>tol};
+  const step=Math.max(2,Math.round(W/160)),top=[];let ground=0;
+  for(let i=0;i<W;i+=step){
+    let t=-1;for(let j=0;j<H-3;j++){if(df(i,j)&&df(i,j+1)&&df(i,j+2)){t=j;break}}
+    if(t<0)continue;
+    let bt=t;for(let j=H-1;j>t;j--){if(df(i,j)){bt=j;break}}
+    top.push([i,t]);ground=Math.max(ground,bt);
+  }
+  if(top.length<5){E[k].hint.textContent='輪郭を検出できませんでした。許容差を変えるか、手動でトレースしてください';return}
+  s.sil=[...top,[top[top.length-1][0],ground],[top[0][0],ground]];s.cur=[];
+  E[k].hint.textContent='自動シルエットを作成。ずれる場合は許容差を調整して再実行、または④で手動トレース';
+  redraw(k);commit(k);
+}
+
+function redraw(k){
+  const e=E[k],cv=e.cv,x=cv.getContext('2d'),img=IMG[kk(k)],s=st(k);
+  if(!img){
+    cv.width=1200;cv.height=360;x.fillStyle='#13181d';x.fillRect(0,0,1200,360);
+    x.fillStyle='#8896a3';x.font='26px system-ui,sans-serif';x.textAlign='center';
+    x.fillText('サイドビュー写真を選んでください（背景が単色だと自動抽出が効きます）',600,170);
+    if(M[kk(k)])x.fillText('保存済みの抽出データあり（下の重ね比較に表示中）',600,220);
+    return;
+  }
+  cv.width=img.naturalWidth;cv.height=img.naturalHeight;x.drawImage(img,0,0);
+  const lw=Math.max(2,cv.width/350),col=COL[k];
+  const poly=(pts,fill,close)=>{
+    if(!pts.length)return;x.beginPath();pts.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));
+    if(close){x.closePath();x.fillStyle=fill;x.fill()}
+    x.strokeStyle=col;x.lineWidth=lw;x.stroke();
+  };
+  if(s.sil)poly(s.sil,col+'33',true);
+  s.dlo.forEach(a=>poly(a,col+'77',true));
+  poly(s.cur,'',false);
+  if(s.tire&&s.rear&&s.front){const r=Math.hypot(s.tire[1][0]-s.tire[0][0],s.tire[1][1]-s.tire[0][1])/2;[s.rear,s.front].forEach(q=>{x.beginPath();x.arc(q[0],q[1],r,0,7);x.strokeStyle=col;x.lineWidth=lw;x.stroke()})}
+  if(s.tire)s.tire.forEach(q=>{x.fillStyle=col;x.beginPath();x.arc(q[0],q[1],lw*1.5,0,7);x.fill()});
+  s.cur.forEach(p=>{x.fillStyle=col;x.beginPath();x.arc(p[0],p[1],lw*1.5,0,7);x.fill()});
+  [['rear','R'],['front','F'],['hip','H']].forEach(([n,t])=>{
+    const p=s[n];if(!p)return;
+    x.strokeStyle='#fff';x.lineWidth=lw;x.beginPath();x.arc(p[0],p[1],lw*3,0,7);
+    x.moveTo(p[0]-lw*5,p[1]);x.lineTo(p[0]+lw*5,p[1]);x.moveTo(p[0],p[1]-lw*5);x.lineTo(p[0],p[1]+lw*5);x.stroke();
+    x.fillStyle='#fff';x.font=`${lw*7}px system-ui,sans-serif`;x.textAlign='left';x.fillText(t,p[0]+lw*5,p[1]-lw*4);
+  });
+}
+
+function noteWB(k){
+  const c=CARS[kk(k)],e=E[k],s=st(k);
+  if(!c){e.note.textContent='';return}
+  e.note.innerHTML=`WB既定 ${c[1]}mm（${esc(c[0])}）`+(c[3]?` <a href="${c[3]}" target="_blank" rel="noopener" style="color:#92c9ff">参考↗</a>`:'')+(s.wb!==c[1]?' <b>※手入力で変更中</b>':'');
+}
+function bindPick(k){
+  const e=E[k],d=e.box.querySelector('details');
+  e.pick.onchange=()=>{SEL[k]=e.pick.value;updateUI()};
+  d.querySelector('.ca').onclick=()=>{
+    const n=d.querySelector('.cn').value.trim(),w=+d.querySelector('.cw').value;
+    if(!n||!(w>1000&&w<5000))return;
+    const id='c:'+n;CARS[id]=CUSTOM[id]=[n,w,'ユーザー追加'];
+    try{localStorage.setItem('atlas-cust',JSON.stringify(CUSTOM))}catch(x){}
+    SEL[k]=id;d.open=false;updateUI();
+  };
+}
+function fillPicks(){
+  const row=bestRow();
+  ['w','n'].forEach(k=>{
+    const sel=E[k].pick,dn=CARS[row[k==='w'?0:1]],g={n:[],o:[],c:[]};
+    Object.keys(CARS).forEach(id=>{(id.startsWith('c:')?g.c:/^(Nissan|Datsun)/.test(CARS[id][0])?g.n:g.o).push(id)});
+    const grp=(l,a)=>a.length?`<optgroup label="${l}">`+a.map(id=>`<option value="${esc(id)}">${esc(CARS[id][0])}</option>`).join('')+'</optgroup>':'';
+    sel.innerHTML=`<option value="">既定：${dn?esc(dn[0]):'-'}</option>`+grp('Nissan / Datsun',g.n)+grp('その他',g.o)+grp('ユーザー追加',g.c);
+    sel.value=(SEL[k]&&CARS[SEL[k]])?SEL[k]:'';
+  });
+}
+function saveView(){try{localStorage.setItem('atlas-view',JSON.stringify({region:regionVal(),year:yr(),SEL,lens:document.getElementById('lens').value}))}catch(e){}}
+function poly(a){let s=0;for(let i=0;i<a.length;i++){const p=a[i],q=a[(i+1)%a.length];s+=p[0]*q[1]-q[0]*p[1]}return Math.abs(s)/2}
+function metrics(id){
+  const d=M[id];if(!d)return null;const w=d.w,o={};
+  o.wb=w[1][0]-w[0][0];o.hpFront=w[1][0];o.hpRear=-w[0][0];o.tire=d.t?d.t*2:null;
+  let g=null;if(d.t)g=Math.round((w[0][1]+w[1][1])/2+d.t);else if(d.sil)g=Math.max(...d.sil.map(p=>p[1]));
+  o.hp=g;
+  if(d.sil){
+    const xs=d.sil.map(p=>p[0]),ys=d.sil.map(p=>p[1]);
+    o.len=Math.max(...xs)-Math.min(...xs);o.foh=Math.max(...xs)-w[1][0];o.roh=w[0][0]-Math.min(...xs);
+    o.h=g!==null?g-Math.min(...ys):null;
+    if(d.dlo.length)o.dlo=100*d.dlo.reduce((s,a)=>s+poly(a),0)/poly(d.sil);
+  }
+  return o;
+}
+function drawMetrics(){
+  const el=document.getElementById('metrics');if(!el)return;
+  const A=metrics(carId('w')),B=metrics(carId('n'));
+  const rows=[['全長','len'],['全高','h'],['ホイールベース','wb'],['前オーバーハング','foh'],['後オーバーハング','roh'],['H.P.地上高','hp'],['H.P.〜前軸','hpFront'],['H.P.〜後軸','hpRear'],['タイヤ外径','tire'],['DLO面積比 (%)','dlo']];
+  const f=v=>(v==null||isNaN(v))?'—':Math.round(v);
+  el.innerHTML=`<table class="mt"><tr><th>指標 (mm)</th><th style="color:${COL.w}">A：${esc(CARS[carId('w')][0])}</th><th style="color:${COL.n}">B：${esc(CARS[carId('n')][0])}</th><th>B − A</th></tr>`+
+    rows.map(([l,key])=>{const a=A&&A[key],b=B&&B[key];return`<tr><td>${l}</td><td>${f(a)}</td><td>${f(b)}</td><td>${(a==null||b==null)?'—':Math.round(b-a)}</td></tr>`}).join('')+'</table>';
+}
+function showInfo(k){const m=M[kk(k)];E[k].info.textContent=m&&m.t?`タイヤ外径 約${m.t*2}mm（写真から算出）`:''}
+
+function commit(k){
+  const key=kk(k),s=st(k);
+  if(s.rear&&s.front&&s.hip&&s.wb>0&&(s.sil||s.dlo.length||s.tire)){
+    const d=Math.hypot(s.front[0]-s.rear[0],s.front[1]-s.rear[1]);
+    if(d>1){
+      const sc=s.wb/d,sg=Math.sign(s.front[0]-s.rear[0])||1;
+      const f=p=>[Math.round((p[0]-s.hip[0])*sc*sg),Math.round((p[1]-s.hip[1])*sc)];
+      const t=s.tire?Math.round(Math.hypot(s.tire[1][0]-s.tire[0][0],s.tire[1][1]-s.tire[0][1])*sc/2):0;
+      M[key]={sil:s.sil?s.sil.map(f):null,dlo:s.dlo.map(a=>a.map(f)),w:[f(s.rear),f(s.front)],t};saveM();
+    }
+  }else if(M[key]){delete M[key];saveM()}
+  showInfo(k);drawOv();
+}
+
+function syncOv(){
+  document.querySelectorAll('#ovTabs [data-ov]').forEach(b=>b.classList.toggle('active',b.dataset.ov===OV.mode));
+  document.querySelectorAll('#ovTabs [data-ox]').forEach(b=>{b.classList.toggle('active',b.dataset.ox===OV.x);b.style.opacity=OV.mode==='ground'?1:.4});
+}
+
+function drawOv(){drawOv0();drawMetrics()}
+function drawOv0(){
+  const m=document.getElementById('lens').value,GR=600,XF=-1300,gm=OV.mode==='ground',fw=gm&&OV.x==='fw';
+  const gx=fw?XF:0,gy=gm?GR:0;let h='',any=false;const miss=[];
+  for(let x=-3000;x<=2500;x+=500)h+=`<line x1="${x}" x2="${x}" y1="-1300" y2="900" stroke="#2a333c"/>`;
+  for(let n=-2;n<=4;n++){const v=gy-500*n;if(v>-1300&&v<=900){h+=`<line x1="-3000" x2="2700" y1="${v}" y2="${v}" stroke="#2a333c"/>`;if(gm&&n>=0)h+=`<text x="-2950" y="${v-12}" fill="#6b7885" font-size="55">${n*500}</text>`}}
+  h+=`<line x1="${gx}" x2="${gx}" y1="-1300" y2="900" stroke="#5d6a76"/><line x1="-3000" x2="2700" y1="${gy}" y2="${gy}" stroke="#5d6a76"/>`;
+  h+=`<text x="-2950" y="-1220" fill="#8896a3" font-size="70">← FRONT</text><text x="2650" y="-1220" fill="#8896a3" font-size="70" text-anchor="end">REAR →</text>`;
+  for(const k of['w','n']){
+    if((m==='world'&&k==='n')||(m==='nissan'&&k==='w'))continue;
+    const d=M[carId(k)];if(!d)continue;any=true;
+    const c=COL[k];
+    let g=null;
+    if(d.t)g=Math.round((d.w[0][1]+d.w[1][1])/2+d.t);else if(d.sil)g=Math.max(...d.sil.map(p=>p[1]));
+    let dy=0;if(gm){if(g!==null)dy=GR-g;else miss.push(CARS[carId(k)][0])}
+    const dx=fw?XF+d.w[1][0]:0;
+    const X=v=>-v+dx,Y=v=>v+dy,P=a=>a.map(p=>X(p[0])+','+Y(p[1])).join(' ');
+    if(d.t)d.w.forEach(p=>h+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="${d.t}" fill="${c}" fill-opacity=".12" stroke="${c}" stroke-width="2"/>`);
+    if(d.sil)h+=`<polygon points="${P(d.sil)}" fill="${c}" fill-opacity=".1" stroke="${c}" stroke-width="2"/>`;
+    d.dlo.forEach(a=>h+=`<polygon points="${P(a)}" fill="${c}" fill-opacity=".5" stroke="${c}" stroke-width="1.5"/>`);
+    if(!gm&&g!==null)h+=`<line x1="-3000" x2="2700" y1="${Y(g)}" y2="${Y(g)}" stroke="${c}" stroke-opacity=".5" stroke-dasharray="6 6"/>`;
+    d.w.forEach(p=>h+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="30" fill="${c}"/>`);
+    if(gm)h+=`<circle cx="${X(0)}" cy="${Y(0)}" r="36" fill="none" stroke="${c}" stroke-width="2.5"/><line x1="${X(0)-55}" x2="${X(0)+55}" y1="${Y(0)}" y2="${Y(0)}" stroke="${c}"/><line x1="${X(0)}" x2="${X(0)}" y1="${Y(0)-55}" y2="${Y(0)+55}" stroke="${c}"/>`;
+  }
+  if(!gm)h+=`<circle cx="0" cy="0" r="40" fill="none" stroke="#fff" stroke-width="2"/><text x="60" y="-50" fill="#fff" font-size="70">H.P.</text>`;
+  if(!any)h+=`<text x="-150" y="-250" fill="#8896a3" font-size="90" text-anchor="middle">写真から抽出すると、ここに実寸で重なります</text>`;
+  document.getElementById('ov').innerHTML=h;
+  document.getElementById('ovLegend').innerHTML=`<span style="color:${COL.w}">■ A：${esc(CARS[carId('w')][0])}</span> ｜ <span style="color:${COL.n}">■ B：${esc(CARS[carId('n')][0])}</span> ｜ 円＝タイヤ外径`+(miss.length?` ｜ <span style="color:#ffd166">接地位置が未抽出のためH.P.基準で表示：${miss.join(' / ')}（⑥タイヤ外径か④シルエットが必要）</span>`:'');
+}
+
+async function exportHTML(){
+  const msg=document.getElementById('exportMsg');
+  const body=document.body.cloneNode(true);
+  body.querySelectorAll('script').forEach(n=>n.remove());
+  const tl=body.querySelector('#timeline');if(tl)tl.innerHTML='';
+  ['w','n'].forEach(k=>{
+    const live=document.querySelector('#slot-'+k+' canvas'),cp=body.querySelector('#slot-'+k+' canvas');
+    if(live&&cp&&IMG[kk(k)]){const im=document.createElement('img');im.src=live.toDataURL('image/jpeg',.85);im.style.cssText='display:block;width:100%;max-width:860px;margin:0 auto';cp.replaceWith(im)}
+  });
+  const css=[...document.querySelectorAll('style')].map(s=>s.textContent).filter(t=>t.includes('--panel2')).join('\n');
+  const js=[...document.scripts].map(s=>s.textContent).find(t=>t.includes('function exportHTML'));
+  if(!js){msg.textContent='書き出せませんでした（スクリプトを取得できません）';return}
+  const saved=JSON.stringify({S,M,SRC,year:yr(),region:regionVal(),SEL,CUSTOM,lens:document.getElementById('lens').value,OV}).replace(/</g,'\\u003c');
+  const html='<!doctype html>\n<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Best Seller & Nissan Silhouette Atlas</title><style>'+css+'</style><script id="saved" type="application/json">'+saved+'<\/script></head>'+body.outerHTML+'<script>'+js+'<\/script></html>';
+  const name='nissan-atlas-'+new Date().toISOString().slice(0,10)+'.html';
+  const n=Object.keys(SRC).length;
+  let dl=null;try{dl=window.claude?await claude.use('downloads'):null}catch(e){}
+  try{
+    if(dl){await dl.save({filename:name,data:html})}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download=name;a.click()}
+    msg.textContent=(n?`写真${n}枚を含めて書き出しました`:'写真が未読み込みのため、写真なしで書き出しました')+'（'+Math.round(html.length/1024)+' KB）';
+  }catch(e){msg.textContent=(e&&e.code==='declined')?'キャンセルしました':'書き出せませんでした（'+((e&&e.code)||'error')+'）'}
+}
+
+function updateUI() {
+  const y=yr(),reg=regionVal(),row=bestRow();
+  document.getElementById("yearLabel").textContent=y;
+  const P={w:['worldName','worldSub','worldVolume','worldType','worldProp'],n:['nisName','nisSub','nisVolume','nisCarModel','dareBadgeHtml']};
+  const qn=q=>q>=2?'暫定（統計が乏しい年代・地域）':'目安（要確認）';
+  ['w','n'].forEach(k=>{
+    const c=CARS[carId(k)]||['（未選択）',2600,'-'],p=P[k],man=!!(SEL[k]&&CARS[SEL[k]]);
+    document.getElementById(p[0]).textContent=c[0];
+    document.getElementById(p[1]).textContent=c[2]+' ／ WB '+c[1]+'mm';
+    document.getElementById(p[2]).textContent=man?'手動選択':reg+' '+y+' 既定';
+    document.getElementById(p[3]).textContent=c[2];
+    document.getElementById(p[4]).textContent=man?'手動選択':qn(row[2]);
+  });
+  document.getElementById("eraTitle").textContent=y+'年 × '+(REGIONS.find(r=>r[0]===reg)||[0,reg])[1];
+  document.getElementById("eraDesc").textContent=(reg==='GLOBAL'&&data[y])?data[y].desc:`${reg} ${y}年の既定は、A＝${(CARS[row[0]]||[''])[0]}、B＝${(CARS[row[1]]||[''])[0]} です。販売台数ランキングは記憶ベースの目安で、ピックアップは既定から除外しています。「車種」から自由に差し替えられます。`;
+  document.getElementById("timeline").querySelectorAll("button").forEach(b=>b.classList.toggle("active",+b.dataset.y===y));
+  fillPicks();
+  ['w','n'].forEach(k=>{
+    const s=st(k),e=E[k];e.wb.value=s.wb;
+    e.box.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===s.mode));
+    e.hint.textContent=s.mode?HINT[s.mode]:IDLE;redraw(k);noteWB(k);showInfo(k);
+  });
+  drawOv();saveView();
+}
+
+const timelineContainer = document.getElementById("timeline");timelineContainer.innerHTML="";
+for (let y = 1960; y <= 2025; y += 5) {
+  let btn = document.createElement("button");
+  btn.textContent = y;
+  btn.dataset.y = y;
+  btn.onclick = () => {
+    document.getElementById("year").value = y;
+    updateUI();
+  };
+  timelineContainer.appendChild(btn);
+}
+
+document.getElementById("year").addEventListener("input", updateUI);
+document.getElementById("lens").addEventListener("change", updateUI);
+
+['w','n'].forEach(buildSlot);
+['w','n'].forEach(bindPick);
+document.getElementById('region').addEventListener('change',updateUI);
+try{const v=JSON.parse(localStorage.getItem('atlas-view')||'null');if(v){if(v.region)document.getElementById('region').value=v.region;if(v.year)document.getElementById('year').value=v.year;if(v.lens)document.getElementById('lens').value=v.lens;if(v.SEL)Object.assign(SEL,v.SEL)}}catch(e){}
+document.querySelectorAll('#ovTabs [data-ov]').forEach(b=>b.onclick=()=>{OV.mode=b.dataset.ov;syncOv();drawOv()});
+document.querySelectorAll('#ovTabs [data-ox]').forEach(b=>b.onclick=()=>{OV.x=b.dataset.ox;syncOv();drawOv()});
+document.getElementById('exportBtn').onclick=exportHTML;
+(function(){const b=document.getElementById('ovReset'),L='この年代の抽出を全消去';let t;
+  b.onclick=()=>{if(b.dataset.arm){clearTimeout(t);delete b.dataset.arm;b.textContent=L;['w','n'].forEach(resetTraces)}
+  else{b.dataset.arm=1;b.textContent='もう一度押すと両車の抽出を消去';t=setTimeout(()=>{delete b.dataset.arm;b.textContent=L},3000)}};
+})();
+(function(){
+  const el=document.getElementById('saved');if(!el)return;
+  try{
+    const j=JSON.parse(el.textContent);
+    Object.assign(S,j.S||{});Object.assign(M,j.M||{});
+    if(j.year)document.getElementById('year').value=j.year;
+    if(j.lens)document.getElementById('lens').value=j.lens;
+    if(j.OV)Object.assign(OV,j.OV);if(j.CUSTOM){Object.assign(CUSTOM,j.CUSTOM);Object.assign(CARS,j.CUSTOM)}if(j.region)document.getElementById('region').value=j.region;if(j.SEL)Object.assign(SEL,j.SEL);mig(S);mig(M);mig(j.SRC||{});
+    Object.entries(j.SRC||{}).forEach(([key,src])=>{SRC[key]=src;const im=new Image();im.onload=()=>{IMG[key]=im;updateUI()};im.src=src});
+  }catch(e){}
+})();
+syncOv();
+updateUI();
+</script>
+</body>
+</html>
